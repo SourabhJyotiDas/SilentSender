@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 export { default } from "next-auth/middleware";
+import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
@@ -23,6 +23,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+// Those are path where middileware should be work
 export const config = {
-  matcher: ["/signup", "/login", "/", "/dashboard/:path*", "/verify/:path*"],
+  matcher: ["/sign-up", "/sign-in", "/", "/dashboard/:path*", "/verify/:path*"],
 };
