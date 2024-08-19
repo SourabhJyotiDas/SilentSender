@@ -6,7 +6,7 @@ export const userNameValidation = z
   .max(25, "Username max length 25 character");
 
 export const signUpSchema = z.object({
-  name: userNameValidation,
+  username: userNameValidation,
   email: z.string().email({ message: "Invalid Username" }),
   password: z.string().min(8, { message: "Must be 8 character" }),
 });

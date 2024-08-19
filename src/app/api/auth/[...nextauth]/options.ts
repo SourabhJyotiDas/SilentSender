@@ -5,6 +5,7 @@ import { dbConnect } from "@/lib/database";
 import UserModel from "@/models/User";
 
 export const authOptions: NextAuthOptions = {
+  
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -49,6 +50,8 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -70,6 +73,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+
+
   pages: {
     signIn: "/signup",
     //  signOut: "/auth/signout",
@@ -77,8 +82,13 @@ export const authOptions: NextAuthOptions = {
     //  verifyRequest: "/auth/verify-request", // (used for check email message)
     //  newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
+
+
+
   session: {
     strategy: "jwt",
   },
+
+
   secret: process.env.NEXTAUTHSECRET,
 };
