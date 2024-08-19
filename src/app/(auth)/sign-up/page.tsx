@@ -9,7 +9,7 @@ import { signUpSchema } from "@/schemas/signUp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ApiResponse } from "@/types/ApiResponse";
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError } from "axios";
 
 export default function page() {
   const [username, setUsername] = useState("");
@@ -55,5 +55,9 @@ export default function page() {
     checkUsernameUnique();
   }, [debounceUserName]);
 
-  return <>Hello</>;
+  return (
+    <>
+      <h1>helllo</h1>
+    </>
+  );
 }
