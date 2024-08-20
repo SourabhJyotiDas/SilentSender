@@ -10,15 +10,12 @@ const UserNameQuerySchema = z.object({
 
 export async function GET(req: Request) {
   // url : "http://localhost:3000/api/check-username?username="Sourabh99"
-
   await dbConnect();
 
   try {
     const { searchParams } = new URL(req.url);
 
-    const queryParam = {
-      username: searchParams.get("username"),
-    };
+    const queryParam = { username: searchParams.get("username") };
     //  validate with Zod
     const result = UserNameQuerySchema.safeParse(queryParam);
 
