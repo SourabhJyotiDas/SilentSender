@@ -5,11 +5,10 @@ import { dbConnect } from "@/lib/database";
 import UserModel from "@/models/User";
 
 export const authOptions: NextAuthOptions = {
-  
   providers: [
     CredentialsProvider({
       id: "credentials",
-      name: "Credentials",
+      name: "credentials",
       credentials: {
         email: {
           label: "Email",
@@ -18,16 +17,13 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials: any, req): Promise<any> {
         await dbConnect();
         try {
           const user = await UserModel.findOne({
-            $or: [
-              { email: credentials.identifier.email },
-              { username: credentials.identifier.username },
-            ],
+            email: credentials.identifier,
           });
-
           if (!user) {
             throw new Error("No User found");
           }
@@ -51,10 +47,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        // console.log("user-->", user);
+
         token._id = user._id?.toString();
         token.isVerified = user.isVerified;
         token.isAcceptingMessages = user.isAcceptingMessages;
@@ -64,7 +61,9 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
+      
       if (token) {
+        console.log("token -->", token);
         session.user._id = token._id;
         session.user.isVerified = token.isVerified;
         session.user.isAcceptingMessages = token.isAcceptingMessages;
@@ -74,21 +73,17 @@ export const authOptions: NextAuthOptions = {
     },
   },
 
-
   pages: {
-    signIn: "/sign-up",
+    signIn: "/sign-in",
     //  signOut: "/auth/signout",
     //  error: "/auth/error", // Error code passed in query string as ?error=
     //  verifyRequest: "/auth/verify-request", // (used for check email message)
     //  newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
 
-
-
   session: {
     strategy: "jwt",
   },
 
-
-  secret: process.env.NEXTAUTHSECRET,
+  secret: "HelloWorldWelcome",
 };
